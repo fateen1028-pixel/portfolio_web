@@ -1,0 +1,600 @@
+import React, { useState, useEffect } from 'react';
+import { Brain, Code, Sparkles, Github, Linkedin, Mail, ChevronRight, Database, Cpu, TrendingUp, BookOpen, Rocket, Terminal, FlaskConical, Award, Target,Camera,BarChart } from 'lucide-react';
+import CertificationsPage from "./certificate.jsx";
+
+// Simple Router Implementation
+const Router = ({ children }) => {
+    const [path, setPath] = useState(window.location.hash.slice(1) || '/');
+
+    useEffect(() => {
+        const handleHashChange = () => setPath(window.location.hash.slice(1) || '/');
+        window.addEventListener('hashchange', handleHashChange);
+        return () => window.removeEventListener('hashchange', handleHashChange);
+    }, []);
+
+    return children(path, setPath);
+};
+
+const Link = ({ to, children, className = '' }) => {
+    const handleClick = (e) => {
+        e.preventDefault();
+        window.location.hash = to;
+    };
+
+    return (
+        <a href={`#${to}`} className={className} onClick={handleClick}>
+            {children}
+        </a>
+    );
+};
+
+// Navigation Component
+const Navigation = ({ currentPath }) => {
+    const navItems = [
+        { path: '/', label: 'Home' },
+        { path: '/skills', label: 'Skills' },
+        { path: '/projects', label: 'Projects' },
+        { path: '/learning', label: 'Learning' },
+        {path: '/certifications', label: 'Certifications' },
+        { path: '/contact', label: 'Contact' },
+    ];
+
+    return (
+        <>
+            <style>
+                {`
+          @keyframes fadeDown {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+          }
+          .fade-down {
+            animation: fadeDown 0.6s ease-out;
+          }
+          .nav-hover::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            height: 2px;
+            width: 0%;
+            background: #2563eb; /* Tailwind blue-600 */
+            transition: width 0.3s ease;
+          }
+          .nav-hover:hover::after {
+            width: 100%;
+          }
+        `}
+            </style>
+
+            <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-sm fade-down transition-all duration-500">
+                <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
+                    {/* Logo Section */}
+                    <Link to="/" className="flex items-center gap-2 group">
+                        <div className="w-9 h-9 bg-gradient-to-tr from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center text-white shadow-md group-hover:scale-110 transition-transform">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 animate-pulse">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v18m9-9H3" />
+                            </svg>
+                        </div>
+                        <span className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:opacity-90 transition-opacity">
+              Skillset
+            </span>
+                    </Link>
+
+                    {/* Navigation Links */}
+                    <div className="flex gap-8 items-center">
+                        {navItems.map((item) => (
+                            <Link
+                                key={item.path}
+                                to={item.path}
+                                className={`relative font-medium transition-all duration-300 nav-hover ${
+                                    currentPath === item.path
+                                        ? 'text-blue-600'
+                                        : 'text-gray-600 hover:text-gray-900'
+                                }`}
+                            >
+                                {item.label}
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+            </nav>
+        </>
+    );
+};
+
+
+// Home Page
+const HomePage = () => (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-gray-50 pt-20">
+        <div className="max-w-7xl mx-auto px-6 py-20">
+            <div className="flex flex-col items-center text-center space-y-6">
+                <div className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mb-4">
+                    Computer Science & Machine Learning
+                </div>
+
+                <h1 className="text-6xl font-bold text-gray-900 leading-tight">
+                    Hi,<span className="text-3xl"> I am Mohamed Fateen . F</span> <br/>Building Intelligent<br />
+                    <span className="text-blue-600">Solutions with <span className="text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-slate-100"> Skills</span></span>
+                </h1>
+
+                <p className="text-xl text-gray-600 max-w-2xl leading-relaxed">
+                    I am Passionate about leveraging machine learning and modern web technologies to create impactful applications
+                </p>
+
+                <div className="flex gap-4 mt-8">
+                    <Link to="/projects" className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-all shadow-md hover:shadow-lg flex items-center gap-2">
+                        View Projects <ChevronRight size={20} />
+                    </Link>
+                    <Link to="/contact" className="px-8 py-3 bg-white hover:bg-gray-50 text-gray-700 rounded-lg font-semibold transition-all shadow-md hover:shadow-lg border border-gray-200">
+                        Get in Touch
+                    </Link>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-20 w-full">
+                    <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all border border-gray-100">
+                        <div className="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
+                            <Brain className="text-blue-600" size={28} />
+                        </div>
+                        <h3 className="text-xl font-bold mb-3 text-gray-900">Machine Learning</h3>
+                        <p className="text-gray-600 leading-relaxed">Expert in regression models, decision trees, and classification algorithms</p>
+                    </div>
+
+                    <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all border border-gray-100">
+                        <div className="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center mb-4">
+                            <Cpu className="text-purple-600" size={28} />
+                        </div>
+                        <h3 className="text-xl font-bold mb-3 text-gray-900">Deep Learning</h3>
+                        <p className="text-gray-600 leading-relaxed">Working with PyTorch, transformers, and neural network architectures</p>
+                    </div>
+
+                    <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all border border-gray-100">
+                        <div className="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center mb-4">
+                            <Code className="text-green-600" size={28} />
+                        </div>
+                        <h3 className="text-xl font-bold mb-3 text-gray-900">Full Stack</h3>
+                        <p className="text-gray-600 leading-relaxed">Building modern web applications with React, Vite, and Python</p>
+                    </div>
+                </div>
+
+                <div className="mt-20 w-full bg-white rounded-2xl shadow-lg p-10 border border-gray-100">
+                    <div className="flex items-center justify-center gap-12 flex-wrap">
+                        <div className="text-center">
+                            <div className="text-4xl font-bold text-blue-600 mb-1">50+</div>
+                            <div className="text-gray-600">Projects</div>
+                        </div>
+                        <div className="text-center">
+                            <div className="text-4xl font-bold text-purple-600 mb-1">30+</div>
+                            <div className="text-gray-600">Technologies</div>
+                        </div>
+                        <div className="text-center">
+                            <div className="text-4xl font-bold text-green-600 mb-1">12+</div>
+                            <div className="text-gray-600">Learning Areas</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+);
+
+
+// Skills Page
+const SkillsPage = () => {
+    const skills = [
+        {
+            category: 'Programming & Scripting',
+            icon: <Terminal className="text-blue-600" size={32} />,
+            color: 'blue',
+            items: ['Python', 'JavaScript', 'C', 'Git', 'Linux CLI']
+        },
+        {
+            category: 'Machine Learning',
+            icon: <Brain className="text-purple-600" size={32} />,
+            color: 'purple',
+            items: [
+                'Scikit-learn',
+                'Linear & Logistic Regression',
+                'Decision Trees',
+                'Clustering & Classification',
+                'Model Evaluation & Metrics'
+            ]
+        },
+        {
+            category: 'Deep Learning & AI',
+            icon: <Cpu className="text-indigo-600" size={32} />,
+            color: 'indigo',
+            items: [
+                'PyTorch',
+                'Transformers',
+                'CNNs, RNNs, LSTMs',
+                'Attention Mechanisms',
+                'Model Fine-tuning'
+            ]
+        },
+        {
+            category: 'Computer Vision',
+            icon: <Camera className="text-pink-600" size={32} />,
+            color: 'pink',
+            items: [
+                'OpenCV',
+                'Image Processing',
+                'Object Detection',
+                'Feature Extraction',
+                'Real-time Vision Apps'
+            ]
+        },
+        {
+            category: 'Big Data & Data Engineering',
+            icon: <Database className="text-cyan-600" size={32} />,
+            color: 'cyan',
+            items: [
+                'Apache Spark',
+                'PySpark',
+                'Pandas',
+                'ETL Pipelines',
+                'Large Dataset Handling'
+            ]
+        },
+        {
+            category: 'Web Development',
+            icon: <Code className="text-green-600" size={32} />,
+            color: 'green',
+            items: [
+                'React + Vite',
+                'TailwindCSS',
+                'Flask',
+                'Streamlit',
+                'SaaS Frontend Design'
+            ]
+        },
+        {
+            category: 'AI Integration & Tools',
+            icon: <FlaskConical className="text-orange-600" size={32} />,
+            color: 'orange',
+            items: [
+                'LangChain',
+                'Hugging Face',
+                'LLM Apps',
+                'Prompt Engineering',
+                'Streamlit Dashboards'
+            ]
+        },
+        {
+            category: 'Data Visualization',
+            icon: <BarChart className="text-teal-600" size={32} />,
+            color: 'teal',
+            items: [
+                'Matplotlib',
+                'Seaborn',
+                'Plotly',
+                'Interactive Dashboards',
+                'Data Storytelling'
+            ]
+        }
+    ];
+
+    return (
+        <div className="min-h-screen bg-gradient-to-br from-gray-50 via-purple-50 to-gray-50 pt-20">
+            <div className="max-w-7xl mx-auto px-6 py-20">
+                <div className="text-center mb-16">
+                    <div className="inline-block px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-medium mb-4">
+                        Technical Expertise
+                    </div>
+                    <h1 className="text-5xl font-bold mb-4 text-gray-900">
+                        Skills & Technologies
+                    </h1>
+                    <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+                        A diverse toolkit spanning AI, web development, and data systems
+                    </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {skills.map((skill, idx) => (
+                        <div key={idx} className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all border border-gray-100">
+                            <div className={`w-14 h-14 bg-${skill.color}-100 rounded-xl flex items-center justify-center mb-4`}>
+                                {skill.icon}
+                            </div>
+                            <h3 className="text-xl font-bold mb-4 text-gray-900">{skill.category}</h3>
+                            <ul className="space-y-3">
+                                {skill.items.map((item, i) => (
+                                    <li key={i} className="text-gray-600 flex items-center gap-2">
+                                        <div className={`w-1.5 h-1.5 rounded-full bg-${skill.color}-500`}></div>
+                                        {item}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+
+// Projects Page
+const ProjectsPage = () => {
+    const projects = [
+        {
+            title: 'Smart Waste Management Dashboard',
+            description: 'Real-time monitoring dashboard for waste segregation with IoT data visualization and analytics.',
+            tech: ['React', 'Python', 'Data Analytics', 'IoT'],
+            color: 'green',
+            icon: <Target size={24} />
+        },
+        {
+            title: 'ML Model Web Integration',
+            description: 'Deployed ML models using Flask and Streamlit, enabling web-based interaction with predictive models.',
+            tech: ['Streamlit', 'Flask', 'PyTorch'],
+            color: 'purple',
+            icon: <Brain size={24} />
+        },
+        {
+            title: 'Computer Vision Object Detection',
+            description: 'Developed OpenCV-based system for detecting and classifying waste types using image data.',
+            tech: ['OpenCV', 'Python', 'Deep Learning'],
+            color: 'pink',
+            icon: <Camera size={24} />
+        },
+        {
+            title: 'LangChain AI Assistant',
+            description: 'Built a conversational AI using LangChain and Hugging Face models for intelligent query handling.',
+            tech: ['LangChain', 'Transformers', 'Python'],
+            color: 'indigo',
+            icon: <Sparkles size={24} />
+        },
+        {
+            title: 'PySpark Data Pipeline',
+            description: 'Processed large datasets efficiently with Apache Spark and PySpark for real-time analytics.',
+            tech: ['PySpark', 'Apache Spark', 'Big Data'],
+            color: 'cyan',
+            icon: <Database size={24} />
+        },
+        {
+            title: 'Data Visualization Dashboard',
+            description: 'Interactive dashboard visualizing machine learning metrics and datasets using Plotly and React.',
+            tech: ['Plotly', 'React', 'TailwindCSS'],
+            color: 'teal',
+            icon: <BarChart size={24} />
+        },
+        {
+            title: 'SaaS Frontend for Symposium',
+            description: 'Responsive and elegant frontend built with React + Vite for event management and registrations.',
+            tech: ['React', 'Vite', 'TailwindCSS'],
+            color: 'blue',
+            icon: <Code size={24} />
+        },
+        {
+            title: 'Transformer NLP Experiments',
+            description: 'Experimented with transformer architectures and fine-tuned models for NLP and classification tasks.',
+            tech: ['PyTorch', 'Transformers', 'Hugging Face'],
+            color: 'orange',
+            icon: <Cpu size={24} />
+        }
+    ];
+
+    return (
+        <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-gray-50 pt-20">
+            <div className="max-w-7xl mx-auto px-6 py-20">
+                <div className="text-center mb-16">
+                    <div className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mb-4">
+                        Portfolio
+                    </div>
+                    <h1 className="text-5xl font-bold mb-4 text-gray-900">
+                        Featured Projects
+                    </h1>
+                    <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+                        A showcase of applied projects in AI, computer vision, and data-driven web applications
+                    </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {projects.map((project, idx) => (
+                        <div key={idx} className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all border border-gray-100 group">
+                            <div className={`w-14 h-14 bg-${project.color}-100 rounded-xl flex items-center justify-center mb-6 text-${project.color}-600 group-hover:scale-110 transition-transform`}>
+                                {project.icon}
+                            </div>
+                            <h3 className="text-2xl font-bold mb-3 text-gray-900">{project.title}</h3>
+                            <p className="text-gray-600 mb-6 leading-relaxed">{project.description}</p>
+                            <div className="flex flex-wrap gap-2">
+                                {project.tech.map((tech, i) => (
+                                    <span key={i} className="px-4 py-1.5 bg-gray-100 rounded-lg text-sm text-gray-700 font-medium">
+                    {tech}
+                  </span>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+
+// Learning Page
+const LearningPage = () => {
+    const learningPath = [
+        {
+            area: 'Deep Learning Fundamentals',
+            platform: 'Coursera & YouTube',
+            topics: ['Neural Networks', 'Backpropagation', 'Optimization', 'Transformers'],
+            status: 'In Progress',
+            color: 'blue'
+        },
+        {
+            area: 'Mathematics for ML',
+            platform: 'Self Study',
+            topics: ['Linear Algebra', 'Calculus', 'Probability', 'Statistics'],
+            status: 'Ongoing',
+            color: 'purple'
+        },
+        {
+            area: 'PyTorch & Transformers',
+            platform: 'Hugging Face & Docs',
+            topics: ['Model Architecture', 'Fine-tuning', 'Training', 'Deployment'],
+            status: 'In Progress',
+            color: 'green'
+        },
+        {
+            area: 'Big Data Processing',
+            platform: 'Apache Spark Docs',
+            topics: ['PySpark', 'DataFrames', 'RDD', 'Spark vs Pandas'],
+            status: 'Completed',
+            color: 'cyan'
+        }
+    ];
+
+    const resources = [
+        { name: 'Coursera', type: 'Online Learning', icon: <Award size={24} /> },
+        { name: 'YouTube', type: 'Video Tutorials', icon: <BookOpen size={24} /> },
+        { name: 'Hugging Face', type: 'ML Models & Docs', icon: <Brain size={24} /> },
+        { name: 'Free AI/ML Courses', type: 'Structured Learning', icon: <TrendingUp size={24} /> }
+    ];
+
+    return (
+        <div className="min-h-screen bg-gradient-to-br from-gray-50 via-green-50 to-gray-50 pt-20">
+            <div className="max-w-7xl mx-auto px-6 py-20">
+                <div className="text-center mb-16">
+                    <div className="inline-block px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-medium mb-4">
+                        Continuous Growth
+                    </div>
+                    <h1 className="text-5xl font-bold mb-4 text-gray-900">
+                        Learning Journey
+                    </h1>
+                    <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+                        Committed to continuous learning in AI, machine learning, and software development
+                    </p>
+                </div>
+
+                <div className="mb-16">
+                    <h2 className="text-3xl font-bold mb-8 text-gray-900 flex items-center gap-3">
+                        <TrendingUp className="text-green-600" />
+                        Current Focus Areas
+                    </h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {learningPath.map((path, idx) => (
+                            <div key={idx} className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all border border-gray-100">
+                                <div className="flex justify-between items-start mb-4">
+                                    <h3 className="text-xl font-bold text-gray-900">{path.area}</h3>
+                                    <span className={`px-3 py-1 bg-${path.color}-100 text-${path.color}-700 rounded-full text-sm font-medium`}>
+                    {path.status}
+                  </span>
+                                </div>
+                                <p className="text-gray-500 text-sm mb-4 font-medium">{path.platform}</p>
+                                <div className="flex flex-wrap gap-2">
+                                    {path.topics.map((topic, i) => (
+                                        <span key={i} className="px-3 py-1.5 bg-gray-100 rounded-lg text-sm text-gray-700">
+                      {topic}
+                    </span>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <div>
+                    <h2 className="text-3xl font-bold mb-8 text-gray-900 flex items-center gap-3">
+                        <BookOpen className="text-blue-600" />
+                        Learning Resources
+                    </h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {resources.map((resource, idx) => (
+                            <div key={idx} className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all border border-gray-100 text-center">
+                                <div className="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-4 text-blue-600">
+                                    {resource.icon}
+                                </div>
+                                <h4 className="font-bold text-gray-900 mb-2">{resource.name}</h4>
+                                <p className="text-sm text-gray-600">{resource.type}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+// Contact Page
+const ContactPage = () => (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-indigo-50 to-gray-50 pt-20">
+        <div className="max-w-5xl mx-auto px-6 py-20">
+            <div className="text-center mb-16">
+                <div className="inline-block px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium mb-4">
+                    Let's Connect
+                </div>
+                <h1 className="text-5xl font-bold mb-4 text-gray-900">
+                    Get In Touch
+                </h1>
+                <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+                    Interested in collaborating or discussing opportunities? Let's start a conversation
+                </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer"
+                   className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all border border-gray-100 text-center group">
+                    <div className="w-16 h-16 bg-gray-900 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                        <Github className="text-white" size={32} />
+                    </div>
+                    <h3 className="text-xl font-bold mb-2 text-gray-900">GitHub</h3>
+                    <p className="text-gray-600">View my repositories</p>
+                </a>
+
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
+                   className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all border border-gray-100 text-center group">
+                    <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                        <Linkedin className="text-white" size={32} />
+                    </div>
+                    <h3 className="text-xl font-bold mb-2 text-gray-900">LinkedIn</h3>
+                    <p className="text-gray-600">Connect professionally</p>
+                </a>
+
+                <a href="mailto:your.email@example.com"
+                   className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all border border-gray-100 text-center group">
+                    <div className="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                        <Mail className="text-white" size={32} />
+                    </div>
+                    <h3 className="text-xl font-bold mb-2 text-gray-900">Email</h3>
+                    <p className="text-gray-600">Send a message</p>
+                </a>
+            </div>
+
+            <div className="bg-white p-10 rounded-2xl shadow-lg border border-gray-100">
+                <h2 className="text-2xl font-bold mb-4 text-gray-900">Open to Opportunities</h2>
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                    I'm always interested in discussing new projects, innovative ideas, and opportunities in machine learning,
+                    web development, and data science. Whether you have a question, collaboration proposal, or just want to
+                    connect, feel free to reach out.
+                </p>
+                <div className="flex flex-wrap gap-3">
+                    <span className="px-4 py-2 bg-blue-50 text-blue-700 rounded-lg font-medium">ML Projects</span>
+                    <span className="px-4 py-2 bg-purple-50 text-purple-700 rounded-lg font-medium">Web Development</span>
+                    <span className="px-4 py-2 bg-green-50 text-green-700 rounded-lg font-medium">Data Science</span>
+                    <span className="px-4 py-2 bg-orange-50 text-orange-700 rounded-lg font-medium">Open Source</span>
+                </div>
+            </div>
+        </div>
+    </div>
+);
+
+// Main App
+export default function App() {
+    return (
+        <Router>
+            {(path) => (
+                <>
+                    <Navigation currentPath={path} />
+                    {path === '/' && <HomePage />}
+                    {path === '/skills' && <SkillsPage />}
+                    {path === '/projects' && <ProjectsPage />}
+                    {path === '/learning' && <LearningPage />}
+                    {path === '/contact' && <ContactPage />}
+                    {path === '/certifications' && <CertificationsPage />}
+                </>
+            )}
+        </Router>
+    );
+}
