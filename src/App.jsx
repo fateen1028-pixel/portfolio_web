@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Brain, Code, Sparkles, Github, Linkedin, Mail, ChevronRight, Database, Cpu, TrendingUp, BookOpen, Rocket, Terminal, FlaskConical, Award, Target,Camera,BarChart } from 'lucide-react';
+import { Brain, Code, Sparkles, Github, Linkedin, Mail, ChevronRight, Database, Cpu, TrendingUp, BookOpen,X, Rocket, Menu,Terminal, FlaskConical, Award, Target,Camera,BarChart } from 'lucide-react';
 import CertificationsPage from "./certificate.jsx";
 
 // Simple Router Implementation
@@ -30,74 +30,74 @@ const Link = ({ to, children, className = '' }) => {
 
 // Navigation Component
 const Navigation = ({ currentPath }) => {
+    const [menuOpen, setMenuOpen] = useState(false);
     const navItems = [
         { path: '/', label: 'Home' },
         { path: '/skills', label: 'Skills' },
         { path: '/projects', label: 'Projects' },
         { path: '/learning', label: 'Learning' },
-        {path: '/certifications', label: 'Certifications' },
+        { path: '/certifications', label: 'Certifications' },
         { path: '/contact', label: 'Contact' },
     ];
 
     return (
         <>
-            <style>
-                {`
-          @keyframes fadeDown {
-            0% { opacity: 0; transform: translateY(-20px); }
-            100% { opacity: 1; transform: translateY(0); }
-          }
-          .fade-down {
-            animation: fadeDown 0.6s ease-out;
-          }
-          .nav-hover::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -2px;
-            height: 2px;
-            width: 0%;
-            background: #2563eb; /* Tailwind blue-600 */
-            transition: width 0.3s ease;
-          }
-          .nav-hover:hover::after {
-            width: 100%;
-          }
-        `}
-            </style>
-
             <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-sm fade-down transition-all duration-500">
                 <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-
-                    {/* Logo Section */}
+                    {/* Logo */}
                     <Link to="/" className="flex items-center gap-2 group">
                         <div className="w-9 h-9 bg-gradient-to-tr from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center text-white shadow-md group-hover:scale-110 transition-transform">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 animate-pulse">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                 viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"
+                                 className="w-5 h-5 animate-pulse">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v18m9-9H3" />
                             </svg>
                         </div>
-                        <span className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:opacity-90 transition-opacity">
+                        <span className="text-xl sm:text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
               Skillset
             </span>
                     </Link>
 
-                    {/* Navigation Links */}
-                    <div className="flex gap-8 items-center">
+                    {/* Desktop Nav */}
+                    <div className="hidden md:flex gap-8 items-center">
                         {navItems.map((item) => (
                             <Link
                                 key={item.path}
                                 to={item.path}
-                                className={`relative font-medium transition-all duration-300 nav-hover ${
-                                    currentPath === item.path
-                                        ? 'text-blue-600'
-                                        : 'text-gray-600 hover:text-gray-900'
+                                className={`relative font-medium transition-all duration-300 nav-hover ${currentPath === item.path
+                                    ? 'text-blue-600'
+                                    : 'text-gray-600 hover:text-gray-900'
                                 }`}
                             >
                                 {item.label}
                             </Link>
                         ))}
                     </div>
+
+                    {/* Mobile Menu Button */}
+                    <button
+                        className="md:hidden flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-blue-600"
+                        onClick={() => setMenuOpen(!menuOpen)}
+                    >
+                        {menuOpen ? <X size={26} /> : <Menu size={26} />}
+                    </button>
                 </div>
+
+                {/* Mobile Menu */}
+                {menuOpen && (
+                    <div className="md:hidden bg-white border-t border-gray-200 px-6 py-4 flex flex-col gap-4">
+                        {navItems.map((item) => (
+                            <Link
+                                key={item.path}
+                                to={item.path}
+                                className={`font-medium ${currentPath === item.path ? 'text-blue-600' : 'text-gray-700 hover:text-blue-500'}`}
+                                onClick={() => setMenuOpen(false)}
+                            >
+                                {item.label}
+                            </Link>
+                        ))}
+                    </div>
+                )}
             </nav>
         </>
     );
@@ -106,24 +106,27 @@ const Navigation = ({ currentPath }) => {
 
 // Home Page
 const HomePage = () => (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-gray-50 pt-20">
-        <div className="max-w-7xl mx-auto px-6 py-20">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-gray-50 pt-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
             <div className="flex flex-col items-center text-center space-y-6">
                 <div className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mb-4">
                     Computer Science & Machine Learning
                 </div>
 
-                <h1 className="text-6xl font-bold text-gray-900 leading-tight">
-                    Hi,<span className="text-3xl"> I am Mohamed Fateen . F</span> <br/>Building Intelligent<br />
-                    <span className="text-blue-600">Solutions with <span className="text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-slate-100"> Skills</span></span>
+                <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
+                    Hi, <span className="text-2xl sm:text-3xl">I am Mohamed Fateen . F</span><br />
+                    Building Intelligent<br />
+                    <span className="text-blue-600">
+            Solutions with <span className="text-4xl sm:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-slate-100">Skills</span>
+          </span>
                 </h1>
 
-                <p className="text-xl text-gray-600 max-w-2xl leading-relaxed">
-                    I am Passionate about leveraging machine learning and modern web technologies to create impactful applications
+                <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl leading-relaxed">
+                    I am passionate about leveraging machine learning and modern web technologies to create impactful applications.
                 </p>
 
-                <div className="flex gap-4 mt-8">
-                    <Link to="/projects" className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-all shadow-md hover:shadow-lg flex items-center gap-2">
+                <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                    <Link to="/projects" className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2">
                         View Projects <ChevronRight size={20} />
                     </Link>
                     <Link to="/contact" className="px-8 py-3 bg-white hover:bg-gray-50 text-gray-700 rounded-lg font-semibold transition-all shadow-md hover:shadow-lg border border-gray-200">
@@ -131,52 +134,27 @@ const HomePage = () => (
                     </Link>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-20 w-full">
-                    <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all border border-gray-100">
-                        <div className="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
-                            <Brain className="text-blue-600" size={28} />
+                {/* Cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-16 w-full">
+                    {[
+                        { icon: <Brain className="text-blue-600" size={28} />, title: 'Machine Learning', desc: 'Regression, decision trees, and classification algorithms.' },
+                        { icon: <Cpu className="text-purple-600" size={28} />, title: 'Deep Learning', desc: 'PyTorch, transformers, and neural network architectures.' },
+                        { icon: <Code className="text-green-600" size={28} />, title: 'Full Stack', desc: 'Building web apps with React, Vite, and Python.' },
+                    ].map((card, i) => (
+                        <div key={i} className="bg-white p-6 sm:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all border border-gray-100">
+                            <div className="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center mb-4">
+                                {card.icon}
+                            </div>
+                            <h3 className="text-lg sm:text-xl font-bold mb-3 text-gray-900">{card.title}</h3>
+                            <p className="text-gray-600 leading-relaxed">{card.desc}</p>
                         </div>
-                        <h3 className="text-xl font-bold mb-3 text-gray-900">Machine Learning</h3>
-                        <p className="text-gray-600 leading-relaxed">Expert in regression models, decision trees, and classification algorithms</p>
-                    </div>
-
-                    <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all border border-gray-100">
-                        <div className="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center mb-4">
-                            <Cpu className="text-purple-600" size={28} />
-                        </div>
-                        <h3 className="text-xl font-bold mb-3 text-gray-900">Deep Learning</h3>
-                        <p className="text-gray-600 leading-relaxed">Working with PyTorch, transformers, and neural network architectures</p>
-                    </div>
-
-                    <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all border border-gray-100">
-                        <div className="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center mb-4">
-                            <Code className="text-green-600" size={28} />
-                        </div>
-                        <h3 className="text-xl font-bold mb-3 text-gray-900">Full Stack</h3>
-                        <p className="text-gray-600 leading-relaxed">Building modern web applications with React, Vite, and Python</p>
-                    </div>
-                </div>
-
-                <div className="mt-20 w-full bg-white rounded-2xl shadow-lg p-10 border border-gray-100">
-                    <div className="flex items-center justify-center gap-12 flex-wrap">
-                        <div className="text-center">
-                            <div className="text-4xl font-bold text-blue-600 mb-1">50+</div>
-                            <div className="text-gray-600">Projects</div>
-                        </div>
-                        <div className="text-center">
-                            <div className="text-4xl font-bold text-purple-600 mb-1">30+</div>
-                            <div className="text-gray-600">Technologies</div>
-                        </div>
-                        <div className="text-center">
-                            <div className="text-4xl font-bold text-green-600 mb-1">12+</div>
-                            <div className="text-gray-600">Learning Areas</div>
-                        </div>
-                    </div>
+                    ))}
                 </div>
             </div>
         </div>
     </div>
 );
+
 
 
 // Skills Page
