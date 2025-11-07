@@ -23,7 +23,5 @@
       "dest": "/index.html"
     }
   ],
-  "env": {
-    "HUGGINGFACEHUB_API_TOKEN": "@huggingfacehub_api_token"
-  }
+
 }
