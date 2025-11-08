@@ -1,12 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect} from 'react';
 import { 
     Brain, Code, Sparkles, Github, Linkedin, Mail, ChevronRight, 
-    Database, Cpu, TrendingUp, BookOpen, X, Rocket, Menu, Terminal, 
-    FlaskConical, Award, Target, Camera, BarChart,
-    Send, LoaderCircle, User, // <-- Chat icons
-    GraduationCap, Star, Trophy // <-- Icons for CertificationsPage
+    Database, Cpu, TrendingUp, BookOpen, X, Menu, Terminal, 
+    Award, Target, Camera, BarChart, GraduationCap, Star, Trophy
 } from 'lucide-react';
-// import CertificationsPage from "./certificate.jsx"; // <-- REMOVED THIS LINE
 
 // Simple Router Implementation
 const Router = ({ children }) => {
@@ -38,17 +35,15 @@ const Link = ({ to, children, className = '' }) => {
 const Navigation = ({ currentPath }) => {
     const [menuOpen, setMenuOpen] = useState(false);
     
-    // --- UPDATED navItems ---
+    // The "Get With AI" page has been removed.
     const navItems = [
         { path: '/', label: 'Home' },
         { path: '/skills', label: 'Skills' },
         { path: '/projects', label: 'Projects' },
         { path: '/learning', label: 'Learning' },
         { path: '/certifications', label: 'Certifications' },
-        { path: '/get-with-ai', label: 'Get With AI' }, // <-- NEW PAGE
         { path: '/contact', label: 'Contact' },
     ];
-    // --- END UPDATE ---
 
     return (
         <>
@@ -64,12 +59,12 @@ const Navigation = ({ currentPath }) => {
                             </svg>
                         </div>
                         <span className="text-xl sm:text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
-              Skillset
-            </span>
+                            Skillset
+                        </span>
                     </Link>
 
                     {/* Desktop Nav */}
-                    <div className="hidden md:flex gap-6 items-center"> {/* Reduced gap for new item */}
+                    <div className="hidden md:flex gap-6 items-center">
                         {navItems.map((item) => (
                             <Link
                                 key={item.path}
@@ -77,7 +72,7 @@ const Navigation = ({ currentPath }) => {
                                 className={`relative font-medium transition-all duration-300 nav-hover ${currentPath === item.path
                                     ? 'text-blue-600'
                                     : 'text-gray-600 hover:text-gray-900'
-                                } ${item.path === '/get-with-ai' ? 'px-3 py-1.5 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200' : ''}`} // <-- Style for new link
+                                }`}
                             >
                                 {item.label}
                             </Link>
@@ -100,7 +95,7 @@ const Navigation = ({ currentPath }) => {
                             <Link
                                 key={item.path}
                                 to={item.path}
-                                className={`font-medium ${currentPath === item.path ? 'text-blue-600' : 'text-gray-700 hover:text-blue-500'} ${item.path === '/get-with-ai' ? 'px-3 py-1.5 bg-blue-100 rounded-lg' : ''}`}
+                                className={`font-medium ${currentPath === item.path ? 'text-blue-600' : 'text-gray-700 hover:text-blue-500'}`}
                                 onClick={() => setMenuOpen(false)}
                             >
                                 {item.label}
@@ -113,7 +108,7 @@ const Navigation = ({ currentPath }) => {
     );
 };
 
-// --- NEWLY ADDED CERTIFICATIONS PAGE ---
+// Certifications Page
 const CertificationsPage = () => {
     const certifications = [
         {
@@ -201,10 +196,8 @@ const CertificationsPage = () => {
         </div>
     );
 };
-// --- END CERTIFICATIONS PAGE ---
 
-
-// Home Page (Unchanged)
+// Home Page
 const HomePage = () => (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-gray-50 pt-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
@@ -216,8 +209,8 @@ const HomePage = () => (
                     Hi, <span className="text-2xl sm:text-3xl">I am Mohamed Fateen . F</span><br />
                     Building Intelligent<br />
                     <span className="text-blue-600">
-            Solutions with <span className="text-4xl sm:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-slate-100">Skills</span>
-          </span>
+                        Solutions with <span className="text-4xl sm:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-slate-100">Skills</span>
+                    </span>
                 </h1>
                 <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl leading-relaxed">
                     I am passionate about leveraging machine learning and modern web technologies to create impactful applications.
@@ -234,7 +227,7 @@ const HomePage = () => (
                     {[
                         { icon: <Brain className="text-blue-600" size={28} />, title: 'Machine Learning', desc: 'Regression, decision trees, and classification algorithms.' },
                         { icon: <Cpu className="text-purple-600" size={28} />, title: 'Deep Learning', desc: 'PyTorch, transformers, and neural network architectures.' },
-                        { icon: <Code className="text-green-600" size={28} />, title: 'Full Stack', desc: 'Building web apps with React, Vite, and Python.' },
+                        { icon: <Code className="text-green-600" size={28} />, title: 'Full Stack', desc: 'Building web apps with React, Vite, and modern APIs.' },
                     ].map((card, i) => (
                         <div key={i} className="bg-white p-6 sm:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all border border-gray-100">
                             <div className="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center mb-4">
@@ -252,16 +245,17 @@ const HomePage = () => (
 
 
 
-// Skills Page (Unchanged)
+// Skills Page
 const SkillsPage = () => {
+    // Removed Flask and updated AI/Web skills
     const skills = [
         { category: 'Programming & Scripting', icon: <Terminal className="text-blue-600" size={32} />, color: 'blue', items: ['Python', 'JavaScript', 'C', 'Git', 'Linux CLI'] },
         { category: 'Machine Learning', icon: <Brain className="text-purple-600" size={32} />, color: 'purple', items: ['Scikit-learn', 'Linear & Logistic Regression', 'Decision Trees', 'Clustering & Classification', 'Model Evaluation & Metrics'] },
         { category: 'Deep Learning & AI', icon: <Cpu className="text-indigo-600" size={32} />, color: 'indigo', items: ['PyTorch', 'Transformers', 'CNNs, RNNs, LSTMs', 'Attention Mechanisms', 'Model Fine-tuning'] },
         { category: 'Computer Vision', icon: <Camera className="text-pink-600" size={32} />, color: 'pink', items: ['OpenCV', 'Image Processing', 'Object Detection', 'Feature Extraction', 'Real-time Vision Apps'] },
         { category: 'Big Data & Data Engineering', icon: <Database className="text-cyan-600" size={32} />, color: 'cyan', items: ['Apache Spark', 'PySpark', 'Pandas', 'ETL Pipelines', 'Large Dataset Handling'] },
-        { category: 'Web Development', icon: <Code className="text-green-600" size={32} />, color: 'green', items: ['React + Vite', 'TailwindCSS', 'Flask', 'Streamlit', 'SaaS Frontend Design'] },
-        { category: 'AI Integration & Tools', icon: <FlaskConical className="text-orange-600" size={32} />, color: 'orange', items: ['LangChain', 'Hugging Face', 'LLM Apps', 'Prompt Engineering', 'Streamlit Dashboards'] },
+        { category: 'Web Development', icon: <Code className="text-green-600" size={32} />, color: 'green', items: ['React + Vite', 'TailwindCSS', 'Frontend Design', 'JavaScript/TypeScript', 'SaaS Frontend Design'] },
+        { category: 'AI Integration & Tools', icon: <Sparkles className="text-orange-600" size={32} />, color: 'orange', items: ['LangChain', 'Hugging Face Ecosystem', 'LLM Apps', 'Prompt Engineering', 'Generative Models'] },
         { category: 'Data Visualization', icon: <BarChart className="text-teal-600" size={32} />, color: 'teal', items: ['Matplotlib', 'Seaborn', 'Plotly', 'Interactive Dashboards', 'Data Storytelling'] }
     ];
     return (
@@ -289,11 +283,12 @@ const SkillsPage = () => {
 };
 
 
-// Projects Page (Unchanged)
+// Projects Page
 const ProjectsPage = () => {
+    // Removed the ML Model Web Integration project (which used Flask)
     const projects = [
         { title: 'Smart Waste Management Dashboard', description: 'Real-time monitoring dashboard for waste segregation with IoT data visualization and analytics.', tech: ['React', 'Python', 'Data Analytics', 'IoT'], color: 'green', icon: <Target size={24} /> },
-        { title: 'ML Model Web Integration', description: 'Deployed ML models using Flask and Streamlit, enabling web-based interaction with predictive models.', tech: ['Streamlit', 'Flask', 'PyTorch'], color: 'purple', icon: <Brain size={24} /> },
+        { title: 'Interactive Data Storytelling Platform', description: 'Developed a custom web platform for presenting complex data insights through animated and interactive visualizations.', tech: ['D3.js', 'React', 'Data Visualization', 'JavaScript'], color: 'purple', icon: <TrendingUp size={24} /> },
         { title: 'Computer Vision Object Detection', description: 'Developed OpenCV-based system for detecting and classifying waste types using image data.', tech: ['OpenCV', 'Python', 'Deep Learning'], color: 'pink', icon: <Camera size={24} /> },
         { title: 'LangChain AI Assistant', description: 'Built a conversational AI using LangChain and Hugging Face models for intelligent query handling.', tech: ['LangChain', 'Transformers', 'Python'], color: 'indigo', icon: <Sparkles size={24} /> },
         { title: 'PySpark Data Pipeline', description: 'Processed large datasets efficiently with Apache Spark and PySpark for real-time analytics.', tech: ['PySpark', 'Apache Spark', 'Big Data'], color: 'cyan', icon: <Database size={24} /> },
@@ -450,156 +445,6 @@ const Footer = () => (
 );
 
 
-// --- NEW CHATBOT PAGE COMPONENT ---
-const ChatbotPage = () => {
-    const [input, setInput] = useState('');
-    const [messages, setMessages] = useState([
-        { role: 'ai', content: "Hello! I'm an AI assistant. Ask me anything about this portfolio or other topics!" }
-    ]);
-    const [isLoading, setIsLoading] = useState(false);
-    const messagesEndRef = useRef(null);
-
-    // URL for the Flask API
-    // FIX: Changed from 'http://127.0.0.1:5000/chat' to the Vercel relative path '/api/chat'
-    const API_URL = '/api/chat';
-
-    // Scroll to bottom of chat window
-    const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    };
-
-    useEffect(() => {
-        scrollToBottom();
-    }, [messages]);
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!input.trim() || isLoading) return;
-
-        const userMessage = { role: 'user', content: input };
-        setMessages(prev => [...prev, userMessage]);
-        setIsLoading(true);
-        setInput('');
-
-        // Send message and history to the backend
-        try {
-            const response = await fetch(API_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    message: userMessage,
-                    history: messages // Send previous messages for context
-                }),
-            });
-
-            if (!response.ok) {
-                // If Vercel gives a 404/500, we show a better error message
-                const errorText = await response.text();
-                throw new Error(`API request failed: ${response.status} - ${errorText.substring(0, 100)}...`);
-            }
-
-            const data = await response.json();
-            
-            if (data.reply) {
-                const aiMessage = { role: 'ai', content: data.reply };
-                setMessages(prev => [...prev, aiMessage]);
-            } else if (data.error) {
-                const errorMessage = { role: 'ai', content: `Error: ${data.error}` };
-                setMessages(prev => [...prev, errorMessage]);
-            }
-
-        } catch (error) {
-            console.error('Chatbot fetch error:', error);
-            const errorMessage = { role: 'ai', content: `Sorry, I'm having trouble connecting to the AI server. Please check the console for details. Error: ${error.message.substring(0, 50)}...` };
-            setMessages(prev => [...prev, errorMessage]);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-gray-50 pt-24">
-            <div className="max-w-3xl mx-auto px-4 py-16 flex flex-col h-[calc(100vh-10rem)]">
-                <div className="text-center mb-12">
-                    <div className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mb-4">
-                        LangChain & Hugging Face
-                    </div>
-                    <h1 className="text-5xl font-bold mb-4 text-gray-900">Get With AI</h1>
-                    <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-                        Chat with an AI assistant powered by the same models from my projects.
-                    </p>
-                </div>
-
-                {/* Chat Window */}
-                <div className="flex-1 overflow-y-auto bg-white rounded-2xl shadow-lg border border-gray-100 p-6 space-y-4">
-                    {messages.map((msg, index) => (
-                        <div key={index} className={`flex gap-3 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                            {msg.role === 'ai' && (
-                                <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center flex-shrink-0">
-                                    <Sparkles size={20} />
-                                </div>
-                            )}
-                            <div className={`max-w-xs md:max-w-md p-4 rounded-2xl ${
-                                msg.role === 'user' 
-                                ? 'bg-gray-100 text-gray-800 rounded-br-none' 
-                                : 'bg-blue-600 text-white rounded-bl-none'
-                            }`}>
-                                <p className="text-sm leading-relaxed">{msg.content}</p>
-                            </div>
-                            {msg.role === 'user' && (
-                                <div className="w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center flex-shrink-0">
-                                    <User size={20} />
-                                </div>
-                            )}
-                        </div>
-                    ))}
-                    {isLoading && (
-                        <div className="flex gap-3 justify-start">
-                            <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center flex-shrink-0">
-                                <Sparkles size={20} />
-                            </div>
-                            <div className="max-w-xs md:max-w-md p-4 rounded-2xl bg-blue-600 text-white rounded-bl-none">
-                                <LoaderCircle size={20} className="animate-spin" />
-                            </div>
-                        </div>
-                    )}
-                    <div ref={messagesEndRef} />
-                </div>
-
-                {/* Input Form */}
-                <form onSubmit={handleSubmit} className="mt-6">
-                    <div className="flex items-center bg-white rounded-xl shadow-lg border border-gray-100 p-2">
-                        <input
-                            type="text"
-                            value={input}
-                            onChange={(e) => e.target.value.length < 500 && setInput(e.target.value)}
-                            placeholder={isLoading ? "AI is thinking..." : "Ask me anything..."}
-                            className="flex-1 px-4 py-3 bg-transparent text-gray-800 placeholder-gray-500 focus:outline-none"
-                            disabled={isLoading}
-                        />
-                        <button
-                            type="submit"
-                            disabled={isLoading || !input.trim()}
-                            className="w-12 h-12 bg-blue-600 text-white rounded-lg flex items-center justify-center transition-all duration-300
-                                       hover:bg-blue-700 disabled:bg-gray-300"
-                        >
-                            {isLoading ? (
-                                <LoaderCircle size={22} className="animate-spin" />
-                            ) : (
-                                <Send size={22} />
-                            )}
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    );
-};
-// --- END NEW COMPONENT ---
-
-
 // Main App
 export default function App() {
     return (
@@ -613,8 +458,7 @@ export default function App() {
                     {path === '/learning' && <LearningPage />}
                     {path === '/contact' && <ContactPage />}
                     {path === '/certifications' && <CertificationsPage />}
-                    {/* --- NEW ROUTE --- */}
-                    {path === '/get-with-ai' && <ChatbotPage />} 
+                    {/* The route for '/get-with-ai' is removed */}
                     
                     <Footer />
                 </>
